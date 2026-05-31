@@ -1,15 +1,27 @@
 package main
 
 import (
-	"fmt"
+	config "blog_aggregator/internal/config"
+	"log"
 )
 
 func main() {
-	s := "gopher"
-	fmt.Printf("Hello and welcome, %s!\n", s)
 
-	for i := 1; i <= 5; i++ {
-
-		fmt.Println("i =", 100/i)
+	cfg, err := config.Read()
+	if err != nil {
+		log.Fatal(err)
+		return
 	}
+
+	err = cfg.SetUser("Khaz")
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	cfg, err = config.Read()
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
 }

@@ -1,6 +1,7 @@
 # blog_aggregator
 
-RSS feed aggregator build as a part of [Boot.dev](https://www.boot.dev) course.
+[RSS](https://en.wikipedia.org/wiki/RSS) feed aggregator build as a part of [Boot.dev](https://www.boot.dev) course.
+
 Features:
 * Add RSS feeds from across the internet to be collected
 * Store the collected posts in a PostgreSQL database
