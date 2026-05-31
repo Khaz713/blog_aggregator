@@ -1,27 +1,33 @@
 package main
 
 import (
-	config "blog_aggregator/internal/config"
+	"blog_aggregator/internal/config"
 	"log"
+	"os"
 )
 
 func main() {
-
 	cfg, err := config.Read()
 	if err != nil {
 		log.Fatal(err)
-		return
+	}
+	currentState := &state{
+		config: &cfg,
 	}
 
-	err = cfg.SetUser("Khaz")
-	if err != nil {
-		log.Fatal(err)
-		return
+	availableCommands := commands{}
+	availableCommands.register("login", handlerLogin)
+
+	arguments := os.Args[1:]
+	log.Println(arguments)
+	newCommand := command{
+		name: arguments[0],
+		args: arguments[1:],
 	}
-	cfg, err = config.Read()
+
+	err = availableCommands.run(currentState, newCommand)
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 
 }
