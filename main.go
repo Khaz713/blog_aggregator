@@ -11,32 +11,36 @@ import (
 import _ "github.com/lib/pq"
 
 type state struct {
-	config *config.Config
-	db     *database.Queries
+	cfg *config.Config
+	db  *database.Queries
 }
 
-//const connectionString := "postgres://postgres:3323@localhost:5432/gator"
+//"postgres://postgres:3323@localhost:5432/gator"
 
 func main() {
 	cfg, err := config.Read()
 	if err != nil {
 		log.Fatalf("error reading config: %v", err)
 	}
-	currentState := &state{
-		config: &cfg,
-	}
+	log.Printf("config: %+v", cfg)
 
-	db, err := sql.Open("postgres", currentState.config.DBURL)
+	db, err := sql.Open("postgres", cfg.DBURL)
 	if err != nil {
 		log.Fatalf("error connecting to db: %v", err)
 	}
-	defer db.Close()
+	defer log.Fatal(db.Close())
 	dbQueries := database.New(db)
-	currentState.db = dbQueries
+
+	currentState := &state{
+		cfg: &cfg,
+		db:  dbQueries,
+	}
 
 	cmds := commands{}
 	cmds.register("login", handlerLogin)
 	cmds.register("register", handlerRegister)
+	cmds.register("reset", handlerReset)
+	cmds.register("users", handlerUsers)
 
 	arguments := os.Args[1:]
 	log.Printf("Command: %v", arguments)

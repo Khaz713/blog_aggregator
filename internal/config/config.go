@@ -2,6 +2,7 @@ package config
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -17,8 +18,7 @@ const configFileName = ".gatorconfig.json"
 func getConfigFilePath() (string, error) {
 	path, err := os.UserHomeDir()
 	if err != nil {
-		log.Fatal(err)
-		return "", err
+		return "", fmt.Errorf("could not get home directory: %w", err)
 	}
 	return filepath.Join(path, configFileName), nil
 }
@@ -26,22 +26,18 @@ func getConfigFilePath() (string, error) {
 func Read() (Config, error) {
 	path, err := getConfigFilePath()
 	if err != nil {
-		log.Fatal(err)
-		return Config{}, err
+		return Config{}, fmt.Errorf("could not get config file path: %w", err)
 	}
 	config := Config{}
 	file, err := os.Open(path)
 	if err != nil {
-		log.Fatal(err)
-		return Config{}, err
+		return Config{}, fmt.Errorf("could not open config file: %w", err)
 	}
-	defer file.Close()
+	defer log.Fatal(file.Close())
 	decoder := json.NewDecoder(file)
 	if err := decoder.Decode(&config); err != nil {
-		log.Fatal(err)
-		return Config{}, err
+		return Config{}, fmt.Errorf("could not parse config file: %w", err)
 	}
-	log.Print(config)
 	return config, nil
 }
 
@@ -53,22 +49,19 @@ func (c *Config) SetUser(user string) error {
 func write(cfg Config) error {
 	fullPath, err := getConfigFilePath()
 	if err != nil {
-		log.Fatal(err)
 		return err
 	}
 
 	file, err := os.Create(fullPath)
 	if err != nil {
-		log.Fatal(err)
-		return err
+		return fmt.Errorf("could not create config file: %w", err)
 	}
-	defer file.Close()
+	defer log.Fatal(file.Close())
 
 	encoder := json.NewEncoder(file)
 	err = encoder.Encode(cfg)
 	if err != nil {
-		log.Fatal(err)
-		return err
+		return fmt.Errorf("could not write config file: %w", err)
 	}
 
 	return nil
