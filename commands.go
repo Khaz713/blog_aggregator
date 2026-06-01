@@ -1,13 +1,8 @@
 package main
 
 import (
-	"blog_aggregator/internal/config"
 	"fmt"
 )
-
-type state struct {
-	config *config.Config
-}
 
 type command struct {
 	name string
