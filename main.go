@@ -6,9 +6,9 @@ import (
 	"database/sql"
 	"log"
 	"os"
-)
 
-import _ "github.com/lib/pq"
+	_ "github.com/lib/pq"
+)
 
 type state struct {
 	cfg *config.Config
@@ -28,7 +28,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("error connecting to db: %v", err)
 	}
-	defer log.Fatal(db.Close())
+	db.Close()
 	dbQueries := database.New(db)
 
 	currentState := &state{
@@ -41,6 +41,7 @@ func main() {
 	cmds.register("register", handlerRegister)
 	cmds.register("reset", handlerReset)
 	cmds.register("users", handlerUsers)
+	cmds.register("agg", handlerAgg)
 
 	arguments := os.Args[1:]
 	log.Printf("Command: %v", arguments)
