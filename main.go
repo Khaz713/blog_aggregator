@@ -28,7 +28,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("error connecting to db: %v", err)
 	}
-	db.Close()
+	defer db.Close()
 	dbQueries := database.New(db)
 
 	currentState := &state{
@@ -42,6 +42,8 @@ func main() {
 	cmds.register("reset", handlerReset)
 	cmds.register("users", handlerUsers)
 	cmds.register("agg", handlerAgg)
+	cmds.register("addfeed", handlerAddFeed)
+	cmds.register("feeds", handlerFeeds)
 
 	arguments := os.Args[1:]
 	log.Printf("Command: %v", arguments)
