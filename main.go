@@ -48,6 +48,7 @@ func main() {
 	cmds.register("follow", middlewareLoggedIn(handlerFollow))
 	cmds.register("following", middlewareLoggedIn(handlerFollowing))
 	cmds.register("unfollow", middlewareLoggedIn(handlerUnFollow))
+	cmds.register("browse", handlerBrowse)
 
 	arguments := os.Args[1:]
 	log.Printf("Command: %v", arguments)
