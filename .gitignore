@@ -88,7 +88,7 @@ fabric.properties
 *.dll
 *.so
 *.dylib
-blog_aggregator
+gator
 
 # Test binary, built with `go test -c`
 *.test

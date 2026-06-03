@@ -1,9 +1,9 @@
 package main
 
 import (
-	"blog_aggregator/internal/database"
 	"context"
 	"fmt"
+	"gator/internal/database"
 	"log"
 	"time"
 

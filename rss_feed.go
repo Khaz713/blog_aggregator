@@ -1,11 +1,11 @@
 package main
 
 import (
-	"blog_aggregator/internal/database"
 	"context"
 	"database/sql"
 	"encoding/xml"
 	"fmt"
+	"gator/internal/database"
 	"html"
 	"io"
 	"log"

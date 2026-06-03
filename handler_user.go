@@ -1,10 +1,10 @@
 package main
 
 import (
-	"blog_aggregator/internal/database"
 	"context"
 	"errors"
 	"fmt"
+	"gator/internal/database"
 	"log"
 	"time"
 

@@ -1,4 +1,4 @@
-module blog_aggregator
+module gator
 
 go 1.25
 

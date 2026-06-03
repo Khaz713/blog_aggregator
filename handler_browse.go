@@ -25,7 +25,7 @@ func handlerBrowse(s *state, cmd command) error {
 	}
 	fmt.Printf("Browsing %d latest posts\n", len(posts))
 	for _, post := range posts {
-		fmt.Printf("Title: %v\nPublished at: %v\n%v\n", post.Title.String, post.PublishedAt.Time.Format(time.RFC3339), post.Description.String)
+		fmt.Printf("Title: %v\nPublished at: %v\nLink: %v\n%v\n", post.Title.String, post.PublishedAt.Time.Format(time.RFC3339), post.Url.String, post.Description.String)
 	}
 	return nil
 }

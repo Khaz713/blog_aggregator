@@ -1,10 +1,10 @@
 package main
 
 import (
-	"blog_aggregator/internal/config"
-	"blog_aggregator/internal/database"
 	"context"
 	"database/sql"
+	"gator/internal/config"
+	"gator/internal/database"
 	"log"
 	"os"
 
