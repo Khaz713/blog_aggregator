@@ -3,6 +3,7 @@ package main
 import (
 	"blog_aggregator/internal/config"
 	"blog_aggregator/internal/database"
+	"context"
 	"database/sql"
 	"log"
 	"os"
@@ -42,10 +43,11 @@ func main() {
 	cmds.register("reset", handlerReset)
 	cmds.register("users", handlerUsers)
 	cmds.register("agg", handlerAgg)
-	cmds.register("addfeed", handlerAddFeed)
+	cmds.register("addfeed", middlewareLoggedIn(handlerAddFeed))
 	cmds.register("feeds", handlerFeeds)
-	cmds.register("follow", handlerFollow)
-	cmds.register("following", handlerFollowing)
+	cmds.register("follow", middlewareLoggedIn(handlerFollow))
+	cmds.register("following", middlewareLoggedIn(handlerFollowing))
+	cmds.register("unfollow", middlewareLoggedIn(handlerUnFollow))
 
 	arguments := os.Args[1:]
 	log.Printf("Command: %v", arguments)
@@ -59,4 +61,15 @@ func main() {
 		log.Fatal(err)
 	}
 
+}
+
+func middlewareLoggedIn(handler func(s *state, cmd command, user database.User) error) func(*state, command) error {
+	return func(s *state, cmd command) error {
+		user, err := s.db.GetUser(context.Background(), s.cfg.CurrentUserName)
+		if err != nil {
+			return err
+		}
+
+		return handler(s, cmd, user)
+	}
 }

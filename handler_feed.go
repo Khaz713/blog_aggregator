@@ -11,14 +11,11 @@ import (
 	"github.com/google/uuid"
 )
 
-func handlerAddFeed(s *state, cmd command) error {
+func handlerAddFeed(s *state, cmd command, user database.User) error {
 	if len(cmd.args) != 2 {
 		return errors.New("addfeed expects 2 arguments")
 	}
-	user, err := s.db.GetUser(context.Background(), s.cfg.CurrentUserName)
-	if err != nil {
-		return fmt.Errorf("get user: %w", err)
-	}
+
 	arg := database.CreateFeedParams{
 		ID:        uuid.New(),
 		CreatedAt: time.Now(),
