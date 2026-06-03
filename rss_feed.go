@@ -5,13 +5,14 @@ import (
 	"database/sql"
 	"encoding/xml"
 	"fmt"
-	"gator/internal/database"
 	"html"
 	"io"
 	"log"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/Khaz713/gator/internal/database"
 
 	"github.com/google/uuid"
 )

@@ -4,9 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"gator/internal/database"
 	"log"
 	"time"
+
+	"github.com/Khaz713/gator/internal/database"
 
 	"github.com/google/uuid"
 )
